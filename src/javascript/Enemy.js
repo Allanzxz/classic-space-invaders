@@ -10,4 +10,9 @@ class Enemy {
     draw(ctx) {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
+    move(xVelocity, yVelocity) {
+        this.x += xVelocity;
+        this.y += yVelocity;
+    
+ }
 }
