@@ -7,5 +7,7 @@ class Enemy {
         this.image = new Image();
         this.image.src = 'src/assests/imagens/enemy${imageNumber}';
     }
-    
+    draw(ctx) {
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    }
 }
