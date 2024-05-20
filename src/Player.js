@@ -21,6 +21,9 @@ class Player {
         if (this.shootPressed) {
             this.bulletController.shoot(this.x + this.width / 2, this.y, 4, 18);
         }
+        this.move();
+        this.collideWith();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
     move() {
         if(this.rightPressed){
@@ -29,7 +32,7 @@ class Player {
             this.x -= this.velocity;
         }
     }
-    
+
     collideWith(){
         if(this.x < 0){
             this.x = 0;
