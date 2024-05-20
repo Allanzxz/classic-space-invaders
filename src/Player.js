@@ -22,4 +22,20 @@ class Player {
             this.bulletController.shoot(this.x + this.width / 2, this.y, 4, 18);
         }
     }
+    move() {
+        if(this.rightPressed){
+            this.x += this.velocity;
+        }else if (this.leftPressed){
+            this.x -= this.velocity;
+        }
+    }
+    
+    collideWith(){
+        if(this.x < 0){
+            this.x = 0;
+        }
+        if (this.x > this.canvas.with - this.width){
+            this.x = this.canvas.with - this.width;
+        }
+    }
 }
