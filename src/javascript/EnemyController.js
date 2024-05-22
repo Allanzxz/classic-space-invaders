@@ -42,24 +42,56 @@ constructor(canvas, enemyBulletController, playerBulletController) {
     }
     fireBullet(){
         this.fireBulletTimer--;
-        if(this.fireBulletTimerTimer <= 0) {
-            const allEnemies = this.enemyRows.flat()
+        if(this.fireBulletTimer <= 0) {
+            const allEnemies = this.enemyRows.flat();
             const enemyIndex = Math.floor(Math.random() * allEnemies.lenght);
             const enemy = allEnemies[enemyIndex];
             this.enemyBulletController.shoot(enemy.x + enemy.width / 2, enemy.y, -3);
+        }
+    }
 
-            resetMoveDownTimer() 
-                if(this.moveDownTimer <= 0) {
-                    this.moveDownTimer = this.moveDownTimerDefault;
+    resetMoveDownTimer() {
+        if(this.moveDownTimer <= 0 ) {
+            this.moveDownTimer = this.moveDownTimerDefault;
+        }
+    }
+
+    decrementMoveDownTimer(){
+        if(
+            this.currentDirection === MovingDirection.downLeft ||
+            this.currentDirection === MovingDirection.downRight
+        ){
+            this.moveDownTimer--;
+        }
+    }
+
+    updateVelocityAndDirection() {
+        for(const enemyRow of this.enemyRows) {
+            if(this.currentDirection === MovingDirection.right) {
+                this.xVelocity = this.defaultXVelocity;
+                this.yVelocity = 0;
+                const rightMostEnemy = enemyRow[enemyRow.length - 1];
+                if(rightMostEnemy.x + rightMostEnemy.width >= this.canvas.width){
+                    this.currentDirection = MovingDirection.downLeft;
+                    break;
                 }
-                decrementMoveDownTimer()
-                    if(
-                        this.currentDirection === MovingDirection.downLeft ||
-                        this.currentDirection === MovingDirection.downRight 
-                        ) {
-                        this.moveDownTimer--;
-                    
+            } else if(this.currentDirection === MovingDirection.downLeft) {
+                if(this.moveDown(MoveDirection.left)) {
+                    break;
+                } 
+            } else if(this.currentDirection === MovingDirection.left) {
+                this.xVelocity = -this.defaultXVelocity;
+                this.yVelocity = 0
+                const leftMostEnemy = enemyRow[0];
+                if(leftMostEnemy.x <= 0) {
+                    this.currentDirection = MovingDirection.downRight;
+                    break;
+                }
+            } else if (this.currentDirection === MovingDirection.downRight) {
+                if(this.moveDown(Moving)){
+                    break;
                 }
             }
         }
-     }
+    }
+}
