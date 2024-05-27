@@ -27,7 +27,17 @@ this.playerBulletController = playerBulletController;
 this.enemyDeathSound = new Audio("src/assets/sounds/enemy-death.wav");
 this.enemyDeathSound.volume = 0.1;
 
-this.createEnemies();
+this.createEnemies ();
+}
+
+draw(ctx) {
+    this.decrementMoveDownTimer();
+    this.updateVelocityAndDirection();
+    this.collisionDetection();
+    this.fireBullet();
+    this.drawEnemies(ctx);
+    this.resetMoveDownTimer();
+    this.fireBullet 
 }
 
 collisionDetection(){
@@ -117,8 +127,7 @@ enemyRow.draw(ctx);
 }
 
 happy = () => {};
-
-
+ 
 createEnemies(ctx) {
     this.enemyMap.forEach((row, rowIndex) => {
         this.enemyRows[rowIndex] = [];
@@ -126,13 +135,12 @@ createEnemies(ctx) {
             if(enemyNumber > 0) {
                 this.enemyRows[rowIndex].push = (new Enemy(enemyIndex * 35, enemyNumber));
             }
-        });
-    });
+        })
+    })
 } 
 
 
-    collideWith(sprite) {
-        return this.enemyRows.flat().some((enemy) => enemy.collideWith(sprite));
-        
-    }
+ collideWith(sprite){
+    return this.enemyRows.flat().some((enemy) => enemy.collideWith(sprite));
+ }
 }

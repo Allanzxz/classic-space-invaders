@@ -1,45 +1,44 @@
 import Bullet from "./Bullet.js";
-export default class BullteController {
+export default class BulletControler {
     bullets = [];
     timeTillNextBulletAllowed = 0
-    constructor(canvas, maxBulletAtATime, BulletColor, soundEnabled) {
+    constructor(canvas, maxBulletAtTime, bulletColor, soundenabled) {
         this.canvas = canvas;
-        this.maxBulletAtATime = maxBulletAtATime;
-        this.BulletColor = BulletColor;
-        this.soundEnabled = soundEnabled;
+        this.maxBulletAtTime = maxBulletAtTime;
+        this.bulletColor = bulletColor;
+        this.soundenabled = soundenabled;
 
-        this.shootSond = new Audio("src/assets/sounds/shoot.wav");
-        this.shootSond.volume = 0.1;
+        this.shootSound = new Audio("src/assets/sounds/shoot.wav");
+        this.shootSound.volume = 0.1;
     }
-draw(ctx) {
-    this.bullets = this.bullets.filter((bullet) => bullet.y + bullet.width > 0 && bullet.y <= this.canvas.height);
 
+    draw(ctx) {
+        this.bullets = this.bullets.filter((bullet) => bullet.y + bullet.width > 0 && bullet.y <= this.canvas.height);
+    
+       this.bullet.forEach((bullet) => bullet.draw(ctx));
+       if(this.timeFillNewBulletAllowod > 0 ) {
+        this.timeFillNewBulletAllowod--; 
+       }
+    }
+    collideWith(sprite) {
+        const bulletThatWithSpriteIndex = this.bullets.findIndex((bullet) => bullet.collideWith(sprite));
 
-this.bullets.forEach(bullet => bullet.draw(ctx));
-
-if (this.timeTillNextBulletAllowed > 0) {
-    this.timeTillNextBulletAllowed --;
-  }
-}
-collideWith(sprite) {
- const bulletThatHitSpriteIndex = this.bullets.findIndex((bullet) => bullet.collideWith(sprite));
-
-
- if (bulletThatHitSpriteIndex >= 0) {
-     this.bullets.splice(bulletThatHitSpriteIndex, 1);
-     return true;
-  }
-  return false;
- }
- shoot(x, y, velocity, timeTillNextBulletAllowed = 0) {
-    if(this.timeTillNextBulletAllowed <= 0 && this.bullets.length < thia.maxBulletAtATime) {
-        const bullet = new Bullet(this.canvas, x, y, velocity, this.BulletColor)
-        this.bullets.push(bullet);
-        if(this.soundEnabled) {
-            this.shootSond.currentTime = 0;
-            this.shootSond.play();
+        if(bulletThatWithSpriteIndex >= 0) {
+            this.bullets.splice(bulletThatWithSpriteIndex, 1);
+            return true;
         }
-        this.timeTillNextBulletAllowed = timeTillNextBulletAllowed;
+        return false;
     }
- }
+    shoot(x, y, velocity, timeFillNextBulletAllowed = 0) {
+        if(this.bullets.length < this.maxBulletAtTime) {
+            const bullet = new Bullet(this.canvas, x, y, velocity, this.bulletColor);
+            this.bullets.push(bullet);
+            if(this.soundEnabled){
+                this.shootSound.currentTime = 0;
+                this.shootSound.play = 0;
+                this.shootSound.play();
+            }
+            this.timeFillNewBulletAllowed = timeFillNextBulletAllowed;
+        } 
+    }
 }
