@@ -42,7 +42,8 @@ constructor(canvas, enemyBulletController, playerBulletController) {
     }
     fireBullet(){
         this.fireBulletTimer--;
-        if(this.fireBulletTimer <= 0) {
+        if(this.fireBulletTimer <= 0) { 
+            this.fireBulletTimer = this.fireBulletTimerDefault;
             const allEnemies = this.enemyRows.flat();
             const enemyIndex = Math.floor(Math.random() * allEnemies.lenght);
             const enemy = allEnemies[enemyIndex];
@@ -92,6 +93,19 @@ constructor(canvas, enemyBulletController, playerBulletController) {
                     break;
                 }
             }
+        
+            moveDown(newDirection); {
+                this.xVelocity = 0;
+                this.yVelocity = this.defaultYVelocity;
+                if(this.moveDownTimer <= 0) {
+                    return true;
+                } else{
+                    return false;
+                }
+              
+            }
+           
         }
-    }
-}
+     }
+        
+}    
