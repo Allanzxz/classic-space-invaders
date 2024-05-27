@@ -1,4 +1,4 @@
-class Player {
+export default class Player {
     rightPressed = false;
     lefthPressed = false;
     shootPressed = false;
@@ -41,4 +41,20 @@ class Player {
             this.x = this.canvas.with - this.width;
         }
     }
+    keyDown = (event) => {
+        if (event.code == "ArrowDown"){
+            thisrightPressed = true;
+}
+        if (event.code == "ArrowUp"){
+            this.lefthPressed = true;
+}
+    };
+    keyUp = (event) => {
+        if (event.code == "ArrowDown"){
+            thisrightPressed = false;
+}
+        if (event.code == "ArrowUp"){
+            this.lefthPressed = false;
+}
+    };
 }
