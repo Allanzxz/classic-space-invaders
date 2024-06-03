@@ -1,7 +1,8 @@
 export default class Player {
     rightPressed = false;
-    lefthPressed = false;
+    leftPressed = false;
     shootPressed = false;
+
     constructor(canvas, velocity, bulletController) {
         this.canvas = canvas;
         this.velocity = velocity;
@@ -10,51 +11,60 @@ export default class Player {
         this.y = this.canvas.height - 75;
         this.width = 50;
         this.height = 48;
-        this.image = new Image
-        this.image.src = 'src/assets/images;player.png'
+        this.image = new Image();
+        this.image.src = "src/assets/images/player.png";
 
-        document.addEventListener('Keydown', this.keyDown); 
-        document.addEventListener('Keyup', this.keyUp);
-
+        document.addEventListener("keydown", this.keydown);
+        document.addEventListener("keyup", this.keyup);
     }
+
     draw(ctx) {
         if (this.shootPressed) {
-            this.bulletController.shoot(this.x + this.width / 2, this.y, 4, 18);
+            this.bulletController.shoot(this.x + this.width / 2, this.y, 4, 10);
         }
         this.move();
-        this.collideWith();
+        this.collideWithWalls();
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
+
     move() {
-        if(this.rightPressed){
+        if (this.rightPressed) {
             this.x += this.velocity;
-        }else if (this.leftPressed){
-            this.x -= this.velocity;
+        } else if (this.leftPressed) {
+            this.x += -this.velocity;
         }
     }
 
-    collideWith(){
-        if(this.x < 0){
+    collideWithWalls() {
+        if (this.x < 0) {
             this.x = 0;
         }
-        if (this.x > this.canvas.with - this.width){
-            this.x = this.canvas.with - this.width;
+        if (this.x > this.canvas.width - this.width) {
+            this.x = this.canvas.width - this.width;
         }
     }
-    keyDown = (event) => {
-        if (event.code == "ArrowDown"){
-            thisrightPressed = true;
-}
-        if (event.code == "ArrowUp"){
-            this.lefthPressed = true;
-}
+
+    keydown = (event) => {
+        if (event.code == "ArrowRight") {
+            this.rightPressed = true;
+        }
+        if (event.code == "ArrowLeft") {
+            this.leftPressed = true;
+        }
+        if (event.code == "Space") {
+            this.shootPressed = true;
+        }
     };
-    keyUp = (event) => {
-        if (event.code == "ArrowDown"){
-            thisrightPressed = false;
-}
-        if (event.code == "ArrowUp"){
-            this.lefthPressed = false;
-}
+
+    keyup = (event) => {
+        if (event.code == "ArrowRight") {
+            this.rightPressed = false;
+        }
+        if (event.code == "ArrowLeft") {
+            this.leftPressed = false;
+        }
+        if (event.code == "Space") {
+            this.shootPressed = false;
+        }
     };
 }
